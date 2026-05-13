@@ -11,15 +11,15 @@ if(isset($_POST['name'],$_POST['email'],$_POST['password'])){
 
     if(!empty($name) || !empty($email) || !empty($password)){
         if(preg_match("/^[a-zA-Z ]+$/", $name) && filter_var($email, FILTER_VALIDATE_EMAIL) && strlen($password) >= 8){
-            $sql_emails = "SELECT * FROM users WHERE email='$email'";
-            $result_emails = mysqli_query($conn, $sql_emails);
-            if(mysqli_num_rows($result_emails) > 0){
+            $sql_emails = $chatty->prepare("SELECT * FROM users WHERE email = ?"); 
+            $sql_emails->execute([$email]);
+            if($sql_emails->rowCount() > 0){
                 header("location:../pages/singUpForm.php?msg=this email already exist");
                 exit();
             }else{   
-                $sql_names = "SELECT * FROM users WHERE name ='$name'";
-                $result_names = mysqli_query($conn, $sql_names);
-                if (mysqli_num_rows($result_names) > 0) {
+                $sql_names = $chatty->prepare("SELECT * FROM users WHERE `name` = ?"); 
+                $sql_names->execute([$name]);
+                if($sql_names->rowCount() > 0){
                     header("location:../pages/singUpForm.php?msg=this name already exist");
                     exit();
                 }else{

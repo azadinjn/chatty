@@ -5,10 +5,10 @@ if(isset($_POST['email'],$_POST['password']) && !empty($_POST['email']) && !empt
     $email = trim($_POST['email']);
     $password = trim($_POST['password']);
     if(filter_var($email, FILTER_VALIDATE_EMAIL) && strlen($password) >= 8){
-            $sql = "SELECT * FROM users WHERE email='$email'";
-            $result = mysqli_query($conn, $sql);
-            if(mysqli_num_rows($result) > 0){
-                    $user = mysqli_fetch_assoc($result);
+            $stmt = $chatty->prepare("SELECT * FROM users WHERE email = ?"); 
+            $stmt->execute([$email]);
+            $user = $stmt->fetch();
+            if($user){
                     if(password_verify($password, $user['password'])){
                         header("location:../pages/homePage.php");
                         exit();

@@ -1,4 +1,7 @@
-
+<?php
+session_start();
+$code = $_SESSION['code'] ;
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -8,6 +11,7 @@
     <title>CHATTY</title>
 </head>
 <body>
+    <?php echo $code ?>
     <h1>singup</h1>
     <form action="../auth/veriCode.php" method="post"  >
         <label for="name">code</label>

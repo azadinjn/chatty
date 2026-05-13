@@ -17,7 +17,7 @@
         <input type="submit" value="singup">
         <p><?php if (isset($_GET["msg"])) {echo $_GET["msg"];}?></p>
     </form>
-    <a href="login.html">i already have account</a>
+    <a href="loginForm.php">i already have account</a>
     <script src="../assets/script.js"></script>
 </body>
 </html>

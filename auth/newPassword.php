@@ -5,7 +5,8 @@ $email = $_SESSION['email'];
 if(isset($_POST['newPassword']) || !empty($_POST['newPassword'])){
         if (strlen($_POST['newPassword']) >= 8) {
                 $newpassword = password_hash($_POST['newPassword'], PASSWORD_DEFAULT);
-                mysqli_query($conn, "UPDATE users SET `password` = '$newpassword' WHERE email = '$email'");
+                $stmt = $chatty->prepare("UPDATE users SET `password` = ? WHERE email = ?"); 
+                $stmt->execute([$newpassword,$email]); 
                 header("location:../pages/loginForm.php");
                 exit();
         }else{

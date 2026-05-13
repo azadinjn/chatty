@@ -5,9 +5,9 @@ require '../vendor/autoload.php';
 use PHPMailer\PHPMailer\PHPMailer;
 if(isset($_POST['email']) || !empty($_POST['email'])){
     $email=$_POST['email'];
-    $sql_emails = "SELECT * FROM users WHERE email='$email'";
-    $result_emails = mysqli_query($conn, $sql_emails);     
-    if (mysqli_num_rows($result_emails) > 0) {
+    $stmt = $chatty->prepare("SELECT * FROM users WHERE email = ?"); 
+    $stmt->execute([$email]);     
+    if ($stmt->rowCount() > 0) {
         $code = random_int(100000, 999999);
         $_SESSION['code'] = $code;
         $_SESSION['email'] = $email;
